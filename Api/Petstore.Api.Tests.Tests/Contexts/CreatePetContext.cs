@@ -1,6 +1,6 @@
 using AppDtos.Pets.Requests;
 using AppDtos.Pets.Responses;
-using Petstore.Api.Services.Http;
+using Petstore.Api.Tests.Services.Http;
 
 namespace Petstore.Api.Tests.Tests.Contexts;
 

@@ -6,5 +6,5 @@
   <Project Path="Petstore.Api.Tests.Data/Petstore.Api.Tests.Data.csproj" />
   <Project Path="Petstore.Api.Tests.Infrastructure/Petstore.Api.Tests.Infrastructure.csproj" />
   <Project Path="Petstore.Api.Tests.Tests/Petstore.Api.Tests.Tests.csproj" />
-  <Project Path="Petstore.Api.Services/Petstore.Api.Services.csproj" />
+  <Project Path="Petstore.Api.Tests.Services/Petstore.Api.Tests.Services.csproj" />
 </Solution>

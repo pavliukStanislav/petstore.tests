@@ -1,9 +1,9 @@
 using System.Net.Http.Json;
 using Microsoft.Extensions.Logging;
-using Petstore.Api.Services.Http;
+using Petstore.Api.Tests.Services.Http;
 using Petstore.Api.Tests.Infrastructure.Configuration;
 
-namespace Petstore.Api.Services.Pets;
+namespace Petstore.Api.Tests.Services.Pets;
 
 internal class PetstoreRequestBuilder
 {

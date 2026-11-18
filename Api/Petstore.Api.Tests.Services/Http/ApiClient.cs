@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
-namespace Petstore.Api.Services.Http;
+namespace Petstore.Api.Tests.Services.Http;
 
 public class ApiClient(HttpClient httpClient, ILogger<ApiClient> logger) : IApiClient
 {

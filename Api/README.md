@@ -14,7 +14,7 @@ The solution contains five projects.
 | `Petstore.Api.Tests.Data` | Factories for test payloads |
 | `Petstore.Api.Tests.Infrastructure` | Loading typed test configuration |
 | `AppDtos` | API DTOs |
-| `Petstore.Api.Services` | HTTP transport and endpoint-specific service methods |
+| `Petstore.Api.Tests.Services` | HTTP transport and endpoint-specific service methods |
 
 The `@api` scenario sends valid pet data to `POST /v2/pet` and verifies HTTP 200, the generated ID, and the submitted fields. `ApiClient` logs the request, status, and response body through `ILogger`, configured with the standard console provider for the test run.
 

@@ -1,6 +1,6 @@
 using Petstore.Api.Tests.Tests.Contexts;
 using Reqnroll;
-using Petstore.Api.Services.Pets;
+using Petstore.Api.Tests.Services.Pets;
 
 namespace Petstore.Api.Tests.Tests.StepDefinitions.CreatePet;
 

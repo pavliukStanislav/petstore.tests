@@ -19,6 +19,6 @@
     <ProjectReference Include="../AppDtos/AppDtos.csproj" />
     <ProjectReference Include="../Petstore.Api.Tests.Data/Petstore.Api.Tests.Data.csproj" />
     <ProjectReference Include="../Petstore.Api.Tests.Infrastructure/Petstore.Api.Tests.Infrastructure.csproj" />
-    <ProjectReference Include="../Petstore.Api.Services/Petstore.Api.Services.csproj" />
+    <ProjectReference Include="../Petstore.Api.Tests.Services/Petstore.Api.Tests.Services.csproj" />
   </ItemGroup>
 </Project>

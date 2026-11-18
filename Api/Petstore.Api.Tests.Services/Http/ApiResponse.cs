@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Petstore.Api.Services.Http;
+namespace Petstore.Api.Tests.Services.Http;
 
 public class ApiResponse<T>
 {
