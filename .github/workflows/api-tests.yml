@@ -1,0 +1,43 @@
+name: API tests
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+    env:
+      REQNROLL_FORMATTERS_HTML: outputFilePath=reqnroll_report.html
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore ./Api/Petstore.Api.Tests.slnx
+
+      - name: Run API tests
+        run: dotnet test ./Api/Petstore.Api.Tests.slnx --no-restore --settings ./Api/ApiTests.runsettings --logger "console;verbosity=normal"
+
+      - name: Upload Reqnroll HTML report
+        id: report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reqnroll-report
+          path: Api/Petstore.Api.Tests.Tests/bin/Debug/net10.0/reqnroll_report.html
+          if-no-files-found: warn
+
+      - name: Link report in run summary
+        if: always() && steps.report.outputs.artifact-url != ''
+        env:
+          REPORT_URL: ${{ steps.report.outputs.artifact-url }}
+        run: echo "[Download the Reqnroll HTML report]($REPORT_URL)" >> "$GITHUB_STEP_SUMMARY"
