@@ -10,6 +10,8 @@ permissions:
 jobs:
   api-tests:
     runs-on: ubuntu-latest
+    outputs:
+      pages-artifact-id: ${{ steps.pages-artifact.outputs.artifact_id }}
     env:
       REQNROLL_FORMATTERS_HTML: outputFilePath=reqnroll_report.html
 
@@ -42,3 +44,38 @@ jobs:
         env:
           REPORT_URL: ${{ steps.report.outputs.artifact-url }}
         run: echo "[Download the Reqnroll HTML report]($REPORT_URL)" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Prepare report for GitHub Pages
+        id: prepare-page
+        if: always() && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && steps.report.outputs.artifact-id != ''
+        run: |
+          mkdir -p pages
+          cp Api/Petstore.Api.Tests.Tests/bin/Debug/net10.0/reqnroll_report.html pages/index.html
+
+      - name: Upload GitHub Pages artifact
+        id: pages-artifact
+        if: always() && steps.prepare-page.outcome == 'success'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: pages
+
+  publish-report:
+    if: always() && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && needs.api-tests.outputs.pages-artifact-id != ''
+    needs: api-tests
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish report to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+      - name: Link published report in run summary
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: echo "[Open the Reqnroll report online]($PAGE_URL)" >> "$GITHUB_STEP_SUMMARY"
