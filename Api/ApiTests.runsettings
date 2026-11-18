@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <EnvironmentVariables>
+      <PETSTORE_BASE_URL>https://petstore.swagger.io/v2/</PETSTORE_BASE_URL>
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>

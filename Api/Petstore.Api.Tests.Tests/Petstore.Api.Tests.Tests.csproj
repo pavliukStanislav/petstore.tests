@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RunSettingsFilePath>$(MSBuildProjectDirectory)/../ApiTests.runsettings</RunSettingsFilePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="4.5.3" />
+    <PackageReference Include="MSTest.TestFramework" Version="4.5.3" />
+    <PackageReference Include="Reqnroll.MSTest" Version="3.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../AppDtos/AppDtos.csproj" />
+    <ProjectReference Include="../Petstore.Api.Tests.Data/Petstore.Api.Tests.Data.csproj" />
+    <ProjectReference Include="../Petstore.Api.Tests.Infrastructure/Petstore.Api.Tests.Infrastructure.csproj" />
+    <ProjectReference Include="../Petstore.Api.Services/Petstore.Api.Services.csproj" />
+  </ItemGroup>
+</Project>
