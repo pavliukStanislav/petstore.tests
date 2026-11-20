@@ -32,6 +32,19 @@ public class CreatePetGivenSteps(PetContext context, PetsService pets)
         context.CreatePetResponse2 = created2.Body!;
     }
 
+    [Given("a pet with no name with photo URL {string}")]
+    public void GivenAPetWithNoNameWithPhotoURL(string photoUrl)
+    {
+        context.CreatePetRequest = PetTestData.CreatePetWithPhonosOnly(photoUrl);
+    }
+
+    [Given("a pet named {string} without photo URL")]
+    public void GivenAPetNamedWithoutPhotoURL(string name)
+    {
+        context.CreatePetRequest = PetTestData.CreatePetWithNameOnly(name);
+    }
+
+
     [Given("pet data with {string}, {string}, {string}, {string}, {string} and {string}")]
     public void GivenPetDataWith(string id, string category, string name, string photoUrls, string tags, string status)
     {
@@ -41,7 +54,7 @@ public class CreatePetGivenSteps(PetContext context, PetsService pets)
     [Given("a pet named {string} with photo URL {string}")]
     public void GivenAPetNamedTest_Pet_Id_WithPhotoURL(string name, string url)
     {
-        context.CreatePetRequest = PetTestData.CreatePet(name, url);
+        context.CreatePetRequest = PetTestData.CreatePetwWithRequiredFieldsOnly(name, url);
     }
 
     [Given("another photo URL {string}")]
@@ -83,7 +96,7 @@ public class CreatePetGivenSteps(PetContext context, PetsService pets)
 
     private async Task<(CreatePetRequestDto Pet, ApiResponse<CreatePetResponseDto> Created)> CreatePetAsync()
     {
-        var pet = PetTestData.CreateValidPet();
+        var pet = PetTestData.CreateValidPetWithRandomFields();
         var created = await pets.CreatePetAsync(pet);
 
         return (pet, created);

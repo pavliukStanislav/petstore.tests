@@ -37,7 +37,7 @@ internal class PetBuilder
         return this;
     }
 
-    public PetBuilder WithTags(List<TagDto> tags)
+    public PetBuilder WithTags(List<TagDto>? tags)
     {
         _pet.Tags = tags;
         return this;

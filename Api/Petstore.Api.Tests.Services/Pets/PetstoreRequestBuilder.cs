@@ -7,7 +7,7 @@ using Petstore.Api.Tests.Infrastructure.Configuration;
 
 namespace Petstore.Api.Tests.Services.Pets;
 
-internal class PetstoreRequestBuilder
+public class PetstoreRequestBuilder
 {
     private static readonly ILoggerFactory _loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
     private static readonly IApiClient _petstoreClient = new ApiClient(new() { BaseAddress = ApiTestSettings.PetstoreBaseUrl }, _loggerFactory.CreateLogger<ApiClient>());

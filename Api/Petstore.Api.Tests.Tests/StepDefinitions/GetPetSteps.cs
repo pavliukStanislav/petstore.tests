@@ -23,8 +23,10 @@ public class GetPetSteps(ApiResponseMetadataContext responseMetadata, PetsServic
     {
         var result = await pets.GetPetWithErrorAsync(id);
 
-        Assert.AreEqual("unknown", result.Body!.Type);
-        Assert.Contains("NumberFormatException", result.Body!.Message);
+        Assert.IsNotNull(result.Body, "Expected an error response");
+        Assert.AreEqual("unknown", result.Body.Type);
+        Assert.IsNotNull(result.Body.Message, "Expected an error message");
+        Assert.Contains("NumberFormatException", result.Body.Message);
 
         responseMetadata.StatusCode = result.StatusCode;
     }

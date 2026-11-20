@@ -1,11 +1,12 @@
 using AppDtos.Pets;
 using AppDtos.Pets.Requests;
+using System.Xml.Linq;
 
 namespace Petstore.Api.Tests.Data.Pets;
 
 public static class PetTestData
 {
-    public static CreatePetRequestDto CreateValidPet()
+    public static CreatePetRequestDto CreateValidPetWithRandomFields()
     {
         var name = $"test-pet-{Guid.NewGuid():N}";
 
@@ -17,12 +18,22 @@ public static class PetTestData
             .Build();
     }
 
-    public static CreatePetRequestDto CreatePet(string name, params List<string> photoUrls) =>
+    public static CreatePetRequestDto CreatePetwWithRequiredFieldsOnly(string name, params List<string> photoUrls) =>
         new PetBuilder()
             .WithName(name)
             .WithPhotoUrls(photoUrls)
             .Build();
 
+    public static CreatePetRequestDto CreatePetWithPhonosOnly(params List<string> photoUrls) =>
+        new PetBuilder()
+            .WithPhotoUrls(photoUrls)
+            .Build();
+
+    public static CreatePetRequestDto CreatePetWithNameOnly(string name) =>
+        new PetBuilder()
+            .WithName(name)
+            .Build();
+    
     public static CreatePetRequestDto CreatePetWithFields(
         string id, string category, string name, string photoUrls, string tags, string status)
     {

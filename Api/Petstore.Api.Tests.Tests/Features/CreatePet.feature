@@ -37,6 +37,20 @@ Feature: Create a pet
     Then the create response contains the submitted pet data
     And the pet can be retrieved with the submitted data
 
+# Found a bug, we shoul NOT have an ability to create a pet with no name, but the API allows it
+Scenario: Create a pet without name
+	Given a pet with no name with photo URL "https://example.com/pets/empty-tag.jpg"
+	When I create the pet
+	Then the pet can NOT be retrieved with the submitted data
+    Then the API returns HTTP 400
+
+# Found a bug, we shoul NOT have an ability to create a pet with no photo URLs, but the API allows it
+Scenario: Create a pet without photos
+	Given a pet named "test-pet-required-fields" without photo URL
+	When I create the pet
+	Then the pet can NOT be retrieved with the submitted data
+    Then the API returns HTTP 400
+
   Scenario: Create a pet with a category containing only an ID
     Given a pet named "test-pet-category-id" with photo URL "https://example.com/pets/category-id.jpg"
     And its category ID is "101"
@@ -96,3 +110,4 @@ Scenario: Create a pet with the out of range ID
     And its status is "available"
     When I create the pet
     Then the API returns HTTP 400
+    

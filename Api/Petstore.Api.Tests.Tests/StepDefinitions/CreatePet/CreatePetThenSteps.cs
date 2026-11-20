@@ -43,6 +43,18 @@ public class CreatePetThenSteps(PetContext context, ApiResponseMetadataContext r
         AssertPetsAreEqual(context.CreatePetRequest, retrieved.Body);
     }
 
+    [Then("the pet can NOT be retrieved with the submitted data")]
+    public async Task ThenThePetCanNOTBeRetrievedWithTheSubmittedData()
+    {
+        var id = context.CreatePetResponse!.Id!.Value;
+        var result = await pets.GetPetWithErrorAsync(id.ToString());
+
+        Assert.AreEqual("error", result.Body!.Type, "Expected an error response");
+        Assert.AreEqual("Pet not found", result.Body!.Message, "Unexpected error message");
+
+        responseMetadata.StatusCode = result.StatusCode;
+    }
+
     [Then("the pet can NOT be retrieved by ID {string}")]
     public async Task ThenThePetCannotBeRetrievedByInvalidId(string id)
     {
@@ -60,28 +72,34 @@ public class CreatePetThenSteps(PetContext context, ApiResponseMetadataContext r
         {
             Assert.IsNotNull(actual.Id, "Expected a generated ID");
         }
-        else {
+        else
+        {
             Assert.AreEqual(submitted.Id, actual.Id, "ID should be equal");
         }
 
         Assert.AreEqual(submitted.Name, actual.Name, "Unexpected pet name");
-        CollectionAssert.AreEqual(submitted.PhotoUrls, actual.PhotoUrls, "Unexpected photo URLs");
+        Assert.AreSequenceEqual(submitted.PhotoUrls, actual.PhotoUrls, "Unexpected photo URLs");
         Assert.AreEqual(submitted.Status, actual.Status, "Unexpected pet status");
 
-        if (submitted.Category is not null && submitted.Category!.Id is null)
+        if (submitted.Category is not null && submitted.Category.Id is null)
         {
-            Assert.AreEqual(submitted.Category.Name, actual.Category!.Name, "Unexpected category name");
+            Assert.AreEqual(submitted.Category.Name, actual.Category?.Name, "Unexpected category name");
         }
-        else {
+        else
+        {
             Assert.AreEquivalent<CategoryDto>(submitted.Category, actual.Category, strict: true, message: "Unexpected category");
         }
 
-
         if (submitted.Tags is null)
         {
-            Assert.IsEmpty(actual.Tags!, "Expected empty tags list");
+            Assert.AreEqual(0, actual.Tags?.Count, "Expected empty tags list");
         }
-        else {
+        else if (actual.Tags is null)
+        {
+            Assert.Fail("Expected tags list");
+        }
+        else
+        {
             Assert.AreEquivalent<List<TagDto>>(submitted.Tags, actual.Tags, strict: true, message: "Unexpected tags");
         }
     }
