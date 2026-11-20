@@ -1,4 +1,6 @@
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using Petstore.Api.Tests.Services.Http;
 using Petstore.Api.Tests.Infrastructure.Configuration;
@@ -11,6 +13,10 @@ internal class PetstoreRequestBuilder
     private static readonly IApiClient _petstoreClient = new ApiClient(new() { BaseAddress = ApiTestSettings.PetstoreBaseUrl }, _loggerFactory.CreateLogger<ApiClient>());
 
     private readonly HttpRequestMessage _request = new();
+    private static readonly JsonSerializerOptions _jsonOptions = new(JsonSerializerDefaults.Web)
+    {
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+    };
 
     public PetstoreRequestBuilder WithMethod(HttpMethod method)
     {
@@ -26,7 +32,7 @@ internal class PetstoreRequestBuilder
 
     public PetstoreRequestBuilder WithJsonBody<T>(T body)
     {
-        _request.Content = JsonContent.Create(body);
+        _request.Content = JsonContent.Create(body, options: _jsonOptions);
         return this;
     }
 
@@ -34,7 +40,11 @@ internal class PetstoreRequestBuilder
     {
         using (_request)
         {
-            _request.Headers.Accept.ParseAdd("application/json");
+            if (_request.Headers.Accept.Count == 0)
+            {
+                _request.Headers.Accept.ParseAdd("application/json");
+            }
+
             return await _petstoreClient.SendAsync<TResponse>(_request, cancellationToken);
         }
     }

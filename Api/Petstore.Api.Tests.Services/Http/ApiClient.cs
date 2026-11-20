@@ -23,7 +23,11 @@ public class ApiClient(HttpClient httpClient, ILogger<ApiClient> logger) : IApiC
         return new ApiResponse<TResponse>
         {
             StatusCode = response.StatusCode,
-            Body = JsonSerializer.Deserialize<TResponse>(rawBody, JsonSerializerOptions.Web)
+            Body = typeof(TResponse) == typeof(string)
+                ? (TResponse)(object)rawBody
+                : string.IsNullOrWhiteSpace(rawBody)
+                    ? default
+                    : JsonSerializer.Deserialize<TResponse>(rawBody, JsonSerializerOptions.Web)
         };
     }
 }

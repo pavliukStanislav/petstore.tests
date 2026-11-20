@@ -2,7 +2,7 @@ namespace AppDtos.Pets;
 
 public class CategoryDto
 {
-    public long? Id { get; set; }
+    public Int128? Id { get; set; }
 
     public string? Name { get; set; }
 }

@@ -2,7 +2,7 @@
 
 Automated API tests for the public [Swagger Petstore](https://petstore.swagger.io/) service, written in C# with Reqnroll and MSTest.
 
-The current suite has one scenario: create a pet with valid data using `POST /v2/pet`, then verify HTTP 200, a positive ID, and the submitted name, status, and photo URLs in the response. It is a starting point for additional API scenarios, not full Petstore coverage.
+The suite covers creating pets with varied field values, retrieving created pets, deleting them, and handling unknown pet IDs. Scenarios for invalid path IDs and zero or negative submitted IDs document known differences between the public demo server and the test case expectations; they are marked `@ignore` and do not fail CI. The suite does not claim full Petstore coverage.
 
 ## Run locally
 
@@ -30,7 +30,7 @@ Invoke-Item .\Api\Petstore.Api.Tests.Tests\bin\Debug\net10.0\reqnroll_report.htm
 
 | Project | Purpose |
 | --- | --- |
-| `Api/Petstore.Api.Tests.Tests` | Reqnroll scenario, step definitions, and assertions |
+| `Api/Petstore.Api.Tests.Tests` | Reqnroll scenarios, step definitions, and assertions |
 | `Api/Petstore.Api.Tests.Data` | Test data and pet builder |
 | `Api/Petstore.Api.Tests.Services` | Petstore HTTP client and service methods |
 | `Api/Petstore.Api.Tests.Infrastructure` | Test configuration |
