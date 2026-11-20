@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="../AppDtos/AppDtos.csproj" />
     <ProjectReference Include="../Petstore.Api.Tests.Infrastructure/Petstore.Api.Tests.Infrastructure.csproj" />
   </ItemGroup>

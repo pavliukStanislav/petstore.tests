@@ -43,7 +43,7 @@ public static class PetTestData
             {
                 "ordinary" => uniqueName,
                 "long" => uniqueName + new string('x', 1003),
-                "unicode" => uniqueName + "-фів-🐈",
+                "unicode" => uniqueName + "-фів-🐈", // name with Unicode characters
                 "empty" => string.Empty,
                 _ => throw new ArgumentOutOfRangeException(nameof(name))
             })

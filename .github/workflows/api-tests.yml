@@ -28,7 +28,7 @@ jobs:
         run: dotnet restore ./Api/Petstore.Api.Tests.slnx
 
       - name: Run API tests
-        run: dotnet test ./Api/Petstore.Api.Tests.slnx --no-restore --settings ./Api/ApiTests.runsettings --logger "console;verbosity=normal"
+        run: dotnet test ./Api/Petstore.Api.Tests.slnx --no-restore --settings ./Api/ApiTests.runsettings --logger "console;verbosity=detailed"
 
       - name: Upload Reqnroll HTML report
         id: report

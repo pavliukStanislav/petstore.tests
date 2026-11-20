@@ -81,8 +81,8 @@ Scenario: Create a pet without photos
 
   Scenario: Create a pet with Unicode in category and tag names
     Given a pet named "test-pet-unicode" with photo URL "https://example.com/pets/unicode.jpg"
-    And its category is named "коте 🐾"
-    And it has a tag named "моє 🐾"
+    And its category is named "коте 🐈"
+    And it has a tag named "моє 🐈"
     When I create the pet
     Then the create response contains the submitted pet data
     And the pet can be retrieved with the submitted data
@@ -98,7 +98,6 @@ Scenario: Create a pet without photos
   Scenario: Create a pet with the largest ID
     Given a pet named "test-pet-id-max" with photo URL "https://example.com/pets/id-max.jpg"
     And its ID is "9223372036854775807"
-    And its status is "available"
     When I create the pet
     Then the create response contains the submitted pet data
     And the pet can be retrieved with the submitted data

@@ -1,24 +1,24 @@
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
 
 namespace Petstore.Api.Tests.Services.Http;
 
-public class ApiClient(HttpClient httpClient, ILogger<ApiClient> logger) : IApiClient
+public class ApiClient(HttpClient httpClient) : IApiClient
 {
     public async Task<ApiResponse<TResponse>> SendAsync<TResponse>(
-        HttpRequestMessage request, CancellationToken cancellationToken = default)
+        HttpRequestMessage request, CancellationToken cancellationToken = default, Action<string>? testOutput = null)
     {
-        logger.LogInformation("HTTP {Method} {Uri}", request.Method, request.RequestUri);
+        testOutput?.Invoke($"HTTP {request.Method} {request.RequestUri}");
         if (request.Content is not null)
         {
-            logger.LogInformation("Request body: {Body}", await request.Content.ReadAsStringAsync(cancellationToken));
+            var requestBody = await request.Content.ReadAsStringAsync(cancellationToken);
+            testOutput?.Invoke($"Request body: {requestBody}");
         }
 
         using var response = await httpClient.SendAsync(request, cancellationToken);
         var rawBody = await response.Content.ReadAsStringAsync(cancellationToken);
 
-        logger.LogInformation("HTTP {StatusCode}", (int)response.StatusCode);
-        logger.LogInformation("Response body: {Body}", rawBody);
+        testOutput?.Invoke($"HTTP {(int)response.StatusCode}");
+        testOutput?.Invoke($"Response body: {rawBody}");
 
         return new ApiResponse<TResponse>
         {
